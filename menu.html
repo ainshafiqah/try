@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Lado Group</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> <!-- Elegant font -->
+    <style>
+        /* Basic styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header, footer {
+            background-color: white;
+            color: black;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header img {
+            width: 150px;
+        }
+
+        /* Sidebar menu */
+        .sidebar {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            padding-top: 20px;
+            z-index: 1000;
+        }
+        .sidebar a {
+            color: black;
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid #ccc;
+            width: 100%;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #444;
+            color: white;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger {
+            display: block;
+            font-size: 30px;
+            color: black;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+
+        /* Menu Categories */
+        .category-container {
+            font-family: Arapey;
+            display: flex;
+            overflow-x: auto;
+            padding: 20px;
+            background-color: #f8f8f8;
+        }
+        .category {
+            flex-shrink: 0;
+            margin-right: 0px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            background-color: #7b641d; /* Box background color */
+            color: white; /* Font color */
+            padding: 10px 15px;
+            border-radius: 1px;
+        }
+        .category:hover {
+            transform: scale(1.1);
+        }
+
+        .category.active {
+        background-color: white; /* Background color when active */
+        color: #7b641d; /* Font color when active */
+        border: 1px solid #7b641d;
+        }
+        
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Menu Items */
+        .menu-item-container {
+            padding: 20px;
+        }
+        .menu-category {
+            font-family: Arapey;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 500px;
+            overflow-y: scroll;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .menu-item img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10%;
+        }
+        .menu-item-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .menu-item-name {
+            font-weight: bold;
+        }
+        .menu-item-price {
+            color: #7b641d;
+            font-size: 14px;
+        }
+
+        /* Footer social icons */
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .footer-icons a {
+            font-size: 20px;
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-icons a:hover {
+            color: #0073e6;
+        }
+
+        /* Contact Us button */
+        .contact-us-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: white;
+            color: black;
+            text-decoration: none;
+            font-size: 15px;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .contact-us-button:hover {
+            background-color: #555;
+        }
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            
+            .category-name {
+                font-size: 10px;
+            }
+            .menu-item img {
+            width: 80px;  /* Smaller size for mobile screens */
+            height: 80px;
+            }
+        }
+
+        /* Scrollbar Styling */
+.menu-category::-webkit-scrollbar {
+    width: 6px; /* Lebar scrollbar */
+}
+
+.menu-category::-webkit-scrollbar-track {
+    background: #f8f8f8; /* Warna latar belakang track */
+    border-radius: 10px; /* Membuat track lebih halus */
+}
+
+.menu-category::-webkit-scrollbar-thumb {
+    background: #ccc; /* Warna thumb scrollbar */
+    border-radius: 10px; /* Membuat thumb lebih halus */
+}
+
+.menu-category::-webkit-scrollbar-thumb:hover {
+    background: #bbb; /* Warna thumb saat di-hover */
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="ladoLogo.png" alt="Lado Group Logo">
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    </header>
+
+    <!-- Sidebar menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-close" onclick="closeMenu()">&#10005;</div>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="#about">About Us</a>
+        <a href="#reservation">Reservation</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="category-container">
+        <!-- Category Items -->
+        <div class="category" onclick="showCategory('category1')">
+            <div class="category-name">KERABU KAMPUNG</div>
+        </div>
+        <div class="category" onclick="showCategory('category2')">
+            <div class="category-name">KELEDEK CHIPS</div>
+        </div>
+        <div class="category" onclick="showCategory('category3')">
+            <div class="category-name">MASAK LEMAK CILI API</div>
+        </div>
+        <div class="category" onclick="showCategory('category4')">
+            <div class="category-name">LADO SIGNATURE</div>
+        </div>
+        <div class="category" onclick="showCategory('category5')">
+            <div class="category-name">SAMBAL TUMIS PETAI</div>
+        </div>
+        <div class="category" onclick="showCategory('category6')">
+            <div class="category-name">SAMBAL HIJAU LADO</div>
+        </div>
+        <div class="category" onclick="showCategory('category7')">
+            <div class="category-name">MASAK KICAP HITAM</div>
+        </div>
+        <div class="category" onclick="showCategory('category8')">
+            <div class="category-name">MASAK ASAM PEDAS</div>
+        </div>
+        <div class="category" onclick="showCategory('category9')">
+            <div class="category-name">MASAK KARI</div>
+        </div>
+        <div class="category" onclick="showCategory('category10')">
+            <div class="category-name">MALAY STYLE GORENG</div>
+        </div>
+        <div class="category" onclick="showCategory('category11')">
+            <div class="category-name">BAKAR & SMOKED</div>
+        </div>
+        <div class="category" onclick="showCategory('category12')">
+            <div class="category-name">MALAYSIAN FAVOURITES</div>
+        </div>
+        <div class="category" onclick="showCategory('category13')">
+            <div class="category-name">MALAY STIR FRY VEGETABLES</div>
+        </div>
+        <div class="category" onclick="showCategory('category14')">
+            <div class="category-name">MALAY ACAR</div>
+        </div>
+        <div class="category" onclick="showCategory('category15')">
+            <div class="category-name">VEGAN SELECTIONS</div>
+        </div>
+        <div class="category" onclick="showCategory('category16')">
+            <div class="category-name">SOMETHING TO SHARE</div>
+        </div>
+        <div class="category" onclick="showCategory('category17')">
+            <div class="category-name">MALAY SAMBAL DIPPING</div>
+        </div>
+        <div class="category" onclick="showCategory('category18')">
+            <div class="category-name">KAMPUNG TASTE WITH CONTEMPORARY TWIST</div>
+        </div>
+        <div class="category" onclick="showCategory('category19')">
+            <div class="category-name">JUICE SELECTIONS</div>
+        </div>
+        <div class="category" onclick="showCategory('category20')">
+            <div class="category-name">LADO REFRESHING MOCKTAILS</div>
+        </div>
+        <div class="category" onclick="showCategory('category21')">
+            <div class="category-name">LADO SIGNATURE</div>
+        </div>
+        <div class="category" onclick="showCategory('category22')">
+            <div class="category-name">COFFEE SELECTIONS</div>
+        </div>
+        <div class="category" onclick="showCategory('category23')">
+            <div class="category-name">LOKAL SELECTIONS</div>
+        </div>
+        <!-- Add more categories here -->
+    </div>
+
+    <!-- Menu Items Section -->
+    <div class="menu-item-container">
+        <div id="category1" class="menu-category">
+            <div class="menu-item">
+                <img src="img2.jpg" alt="Item 1">
+                <div class="menu-item-info">
+                    <div class="menu-item-name">Item 1</div>
+                    <div class="menu-item-price">RM 10</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="item2.jpg" alt="Item 2">
+                <div class="menu-item-info">
+                    <div class="menu-item-name">Item 2</div>
+                    <div class="menu-item-price">RM 15</div>
+                </div>
+            </div>
+        </div>
+        <div id="category2" class="menu-category">
+            <div class="menu-item">
+                <img src="item1.jpg" alt="Item 1">
+                <div class="menu-item-info">
+                    <div class="menu-item-name">Item 22</div>
+                    <div class="menu-item-price">RM 10</div>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="item2.jpg" alt="Item 2">
+                <div class="menu-item-info">
+                    <div class="menu-item-name">Item 2</div>
+                    <div class="menu-item-price">RM 15</div>
+                </div>
+            </div>
+        </div>
+        <!-- Add more categories and items here -->
+    </div>
+
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-icons">
+            <a href="https://www.instagram.com/ladomalaysia?igsh=YWdyZmhhaHo0aXQ3" target="_blank" class="fab fa-instagram"></a>
+            <a href="https://www.facebook.com/share/18XQtt46c3/?mibextid=LQQJ4d" target="_blank" class="fab fa-facebook"></a>
+            <a href="https://www.tiktok.com/@lado.malaysia?_t=8s5Qxy7gHYe&_r=1" target="_blank" class="fab fa-tiktok"></a>
+        </div>
+        <a href="contact.html" class="contact-us-button">Contact Us</a>
+        <p>&copy; 2024 Lado Group. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Toggle the sidebar visibility
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+            } else {
+                sidebar.style.display = 'block';
+            }
+        }
+
+        // Close the sidebar
+        function closeMenu() {
+            document.getElementById('sidebar').style.display = 'none';
+        }
+
+        function showCategory(category) {
+    // Hide all categories
+    const categories = document.querySelectorAll('.menu-category');
+    categories.forEach((cat) => cat.style.display = 'none');
+
+    // Show selected category
+    document.getElementById(category).style.display = 'flex';
+
+    // Remove 'active' class from all categories
+    const categoryElements = document.querySelectorAll('.category');
+    categoryElements.forEach((cat) => cat.classList.remove('active'));
+
+    // Add 'active' class to the clicked category
+    const selectedCategory = document.querySelector(`.category[onclick="showCategory('${category}')"]`);
+    if (selectedCategory) {
+        selectedCategory.classList.add('active');
+    }
+}
+
+// Initialize: Show the first category and make it active
+showCategory('category1');
+
+    </script>
+</body>
+</html>
